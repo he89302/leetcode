@@ -59,11 +59,23 @@
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        int sum = ((1 + nums.size() - 1) * (nums.size() - 1)) / 2;
-        int fullSum = accumulate(nums.begin(), nums.end(), 0);
-        int res = fullSum - sum;
+        int fast = nums[nums[0]];
+        int slow = nums[0];
 
-        return res;
+        while (fast != slow)
+        {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        }
+
+        fast = 0;
+        while (fast != slow)
+        {
+            fast = nums[fast];
+            slow = nums[slow];
+        }
+        
+        return slow;
     }
 };
 // @lc code=end
