@@ -57,18 +57,39 @@ class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
         // vector<int> dp(nums.size());
-        // dp[0] = nums[0];
+        dp[0] = nums[0];
 
         // int currentSum = 0, bestSum = nums[0];
 
         for(int i = 0; i < nums.size(); i++) {
             dp[i] = max(nums[i], nums[i] + dp[i - 1]);
-            currentSum = max(nums[i], nums[i] + currentSum);
-            bestSum = max(currentSum, bestSum);
+        //     currentSum = max(nums[i], nums[i] + currentSum);
+        //     bestSum = max(currentSum, bestSum);
         }
 
-        // return *max_element(std::begin(dp), std::end(dp));
-        return bestSum;
+        return *max_element(std::begin(dp), std::end(dp));
+        // return bestSum;
+
+        return maxSubArray(nums, 0, nums.size() - 1);
+    }
+
+private:
+
+    int maxSubArray(vector<int>& nums, int left, int right) {
+        if(left > right) return INT_MIN;
+        int mid = (left + right) / 2, leftSum = 0, rightSum = 0;
+
+        for(int i = mid - 1, currSum = 0; i >= left; i--) {
+            currSum += nums[i];
+            leftSum = max(leftSum, currSum);
+        }
+
+        for(int i = mid+1, currSum = 0; i <= right; i++) {
+            currSum += nums[i];
+            rightSum = max(rightSum, currSum);
+        }
+
+        return max({maxSubArray(nums, left, mid - 1), maxSubArray(nums, mid + 1, right), leftSum + nums[mid] + rightSum});
     }
 };
 // @lc code=end
