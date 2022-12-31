@@ -70,7 +70,7 @@ public:
         return *max_element(std::begin(dp), std::end(dp));
         // return bestSum;
 
-        return maxSubArray(nums, 0, nums.size() - 1);
+        // return maxSubArray(nums, 0, nums.size() - 1);
     }
 
 private:
