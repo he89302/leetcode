@@ -67,6 +67,9 @@ public:
         // vector<vector<int>> dp(m, vector<int>(n, 0));
         /*
          *stellari
+         *Good O(n) memory solution.
+         *A minor optimization could be to use two pointers to pre and cur and only swap those pointers to avoid vector copying.
+         *
          *Also, if you think about it, it is actually enough to use one vector only instead of two.
          *The whole purpose of maintaining two arrays is that we want to keep the information of pre[i-1]. 
          *So we just need to use another variable to keep track of its
