@@ -64,16 +64,28 @@ public:
         if(matrix.empty()) return 0;
 
         int m = matrix.size(), n = matrix[0].size(), maxSide = 0;
-        vector<vector<int>> dp(m, vector<int>(n, 0));
+        // vector<vector<int>> dp(m, vector<int>(n, 0));
+        /*
+         *stellari
+         *Also, if you think about it, it is actually enough to use one vector only instead of two.
+         *The whole purpose of maintaining two arrays is that we want to keep the information of pre[i-1]. 
+         *So we just need to use another variable to keep track of its
+         * 
+        */
+        int last_topleft;
+        vector<int> currentCol(n, 0);
 
         for(int i = 0; i < m; i++) {
             for(int j = 0; j < n; j++) {
+                int temp = currentCol[j];
                 if(matrix[i][j] == '0' || !i || !j) {
-                    dp[i][j] = matrix[i][j] - '0';
+                    currentCol[j] = matrix[i][j] - '0';
                 } else {
-                    dp[i][j] = min(dp[i-1][j-1], min(dp[i-1][j], dp[i][j-1])) + 1;
+                    currentCol[j] = min(min(last_topleft, currentCol[j]), currentCol[j-1]) + 1;
+                    last_topleft = temp;
                 }
-                maxSide = max(maxSide, dp[i][j]);
+                maxSide = max(maxSide, currentCol[j]);
+                last_topleft = temp;
             }
         }
 
