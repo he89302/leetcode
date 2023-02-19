@@ -94,14 +94,14 @@
 class Solution {
 public:
     bool isValidSudoku(vector<vector<char>>& board) {
-        unordered_set<int> record;
+        unordered_set<string> record;
         for(int i = 0; i < board.size(); i++) {
             for(int j = 0; j < board[0].size(); j++) {
-                if(board[i][j] != '.') {
-                    int num = board[i][j] - '0';
-                    if(!record.emplace(cantorPair(num, i)).second ||
-                       !record.emplace(cantorPair(num, j+9)).second || 
-                       !record.emplace(cantorPair(num, i / 3 * 3 + j / 3 + 18)).second) {
+                string num{board[i][j]};
+                if(num != ".") {
+                    if(!record.emplace(num + " in row " + to_string(i)).second ||
+                       !record.emplace(num + " in col " + to_string(j)).second || 
+                       !record.emplace(num + " in block " + to_string(i / 3) + "-" + to_string(j / 3)).second) {
                             return false;
                        }
                 }
@@ -111,8 +111,8 @@ public:
         return true;
     }
 private:
-    int cantorPair(int number, int position) {
-        return ((number + position) * (number + position + 1)) / 2 + position;
+    int cantor(int x, int y) {
+        return ((x + y) * (x + y + 1)) / 2 + y;
     }
 };
 // @lc code=end
