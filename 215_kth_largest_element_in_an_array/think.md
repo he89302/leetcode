@@ -4,3 +4,8 @@
 
 ## 2 using priority_queue<> to get k largest element
 > O(N lg K) running time + O(k)  memory
+>
+
+## 3 using quick sort(Lumuto partition algorithm)
+> O(N) best case / O(N^2) worst case running time + O(1) memory
+> 
