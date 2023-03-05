@@ -43,12 +43,37 @@
 class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {
-        priority_queue<int> pq(nums.begin(), nums.end());
-        for(int i = 0; i < k - 1; i++) {
-            pq.pop();
+        k = nums.size() - k;
+        int lo = 0, hi = nums.size() - 1;
+
+        while(lo < hi) {
+            const int pivot = partition(nums, lo, hi);
+            if(pivot < k)
+                lo = pivot + 1;
+            else if(pivot > k)
+                hi = pivot - 1;
+            else
+                break;
         }
 
-        return pq.top();
+        return nums[k];
+    }
+private:
+    int partition(vector<int> &nums, int lo, int hi) {
+        int left = lo, right = hi + 1;
+
+        while(true) {
+            while(left < hi && less(nums[++left], nums[lo]));
+            while(right > lo && less(nums[lo], nums[--right]));
+            if(left >= right) break;
+            swap(nums[left], nums[right]);
+        }
+        swap(nums[lo], nums[right]);
+        return right;
+    }
+
+    bool less(int v, int w) {
+        return v < w;
     }
 };
 // @lc code=end
