@@ -66,23 +66,5 @@ public:
         return *max_element(dp.begin(), dp.end());
     }
 
-private:
-
-    int maxSubArray(vector<int>& nums, int left, int right) {
-        if(left > right) return INT_MIN;
-        int mid = (left + right) / 2, leftSum = 0, rightSum = 0;
-
-        for(int i = mid - 1, currSum = 0; i >= left; i--) {
-            currSum += nums[i];
-            leftSum = max(leftSum, currSum);
-        }
-
-        for(int i = mid+1, currSum = 0; i <= right; i++) {
-            currSum += nums[i];
-            rightSum = max(rightSum, currSum);
-        }
-
-        return max({maxSubArray(nums, left, mid - 1), maxSubArray(nums, mid + 1, right), leftSum + nums[mid] + rightSum});
-    }
 };
 // @lc code=end
