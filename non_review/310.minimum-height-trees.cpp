@@ -44,7 +44,12 @@
  * Input: n = 6, edges = [[3,0],[3,1],[3,2],[3,4],[5,4]]
  * Output: [3,4]
  * 
- * 
+ * ### Step
+ * 1.Create adjcent list(neighbors)
+ * 2.Count in-degree of all vertices.
+ * 3.Pick any vertex 'v' which has in-degree of 0.
+ * 4.Print 'v'. Remove the vertex 'v' and all edges coming out of it. Decrement in-degrees of all neighbors of vertex 'v' by 1.
+ * 5.Repeat steps 3 and 4 till u either have just 1 or 2 nodes available.
  * 
  * Constraints:
  * 
@@ -61,20 +66,54 @@
  */
 
 // @lc code=start
+/*
+ * Think : tupu 也就是BFS
+ * 先將edges 做好整理 => 目的為整理出leaf : degree = 1 的node
+ * 如此一來就可以從leaf 一路搜索到中間root node => root node 有機會為1 or 2
+ * 因為有case 是會最後把兩個node 一併刪除
+ * 
+ * 
+*/
 class Solution {
 public:
     vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
+        if (n == 0)
+        {
+            return {};
+        } else if(n == 1) return {0};
+        
         vector<vector<int>> adjList(n);
         vector<int> degree(n);
+        queue<int> leaves;
+        vector<int> res;
 
         for (auto edge : edges) {
             adjList[edge[0]].push_back(edge[1]);
-            adfList[edge[1]].push_back(edge[0]);
+            adjList[edge[1]].push_back(edge[0]);
             degree[edge[0]]++;
             degree[edge[1]]++;
         }
 
-        
+        for(int i = 0; i < n; i++) {
+            if(degree[i] == 1)
+                leaves.push(i);
+        }
+
+        while(!leaves.empty()) {
+            res.clear();
+            int size = leaves.size();
+            for(int i = 0; i < size; i++) {
+                int current = leaves.front(); leaves.pop();
+                res.push_back(current);
+                for(auto neighbor : adjList[current]) {
+                    degree[neighbor]--;
+                    if(degree[neighbor] == 1)
+                        leaves.push(neighbor);
+                }
+            }
+        }
+
+        return res;
     }
 };
 // @lc code=end

@@ -46,6 +46,8 @@
  * ...
  * And so on.
  * 
+ * n = 0 -> permutation (n+1) * maxslot(2)
+ * 1 * 2
  * 
  * Example 3:
  * 
@@ -65,14 +67,44 @@
  * tasks[i] is upper-case English letter.
  * The integer n is in the range [0, 100].
  * 
+ * [A : 6]
+ * [B : 1]
+ * [C : 1]
+ * [D : 1]
+ * [E : 1]
+ * [F : 1]
+ * [G : 1]
  * 
+ * size = 12
+ * 
+ * cpu = 6
+ * n = 2
+ * 
+ * ans = (cpu - 1) * (n + 1) => 5 * 3 = 15
+ * A B C A D E A F G A idle idle A idle idle A
+ * 
+ * need required space = (cpu - 1) * (n + 1) = 15
  */
 
 // @lc code=start
 class Solution {
 public:
     int leastInterval(vector<char>& tasks, int n) {
-        
+        unordered_map<char, int> record;
+        int cpu = 0;
+
+        for(auto e : tasks) {
+            record[e]++;
+            cpu = max(cpu, record[e]);
+        }
+
+        int ans = (cpu - 1) * (n + 1);
+        for(auto e : record) {
+            if(e.second == cpu)
+                ans++;
+        }
+
+        return ans > tasks.size() ? ans : tasks.size();
     }
 };
 // @lc code=end
