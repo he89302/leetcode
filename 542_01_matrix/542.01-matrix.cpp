@@ -47,30 +47,35 @@
 
 // @lc code=start
 class Solution {
-    vector<pair<int,int>>dir={{1,0},{-1,0},{0,-1},{0,1}};
+    vector<pair<int,int>> dirs = {{1,0},{-1,0},{0,-1},{0,1}};
 public:
     vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+        queue<pair<int, int>> record;
         int m = mat.size(), n = mat[0].size();
-        queue<pair<int, int>> q;
 
         for(int i = 0; i < m; i++) {
             for(int j = 0; j < n; j++) {
                 if(mat[i][j] == 0)
-                    q.emplace(i, j);
+                    record.emplace(i, j);
                 else
                     mat[i][j] = -1;
+                int temp = mat[i][j];
+                // cout<< "mat[" + to_string(i) + "]" + "[" + to_string(j) + "]" + " : " + to_string(temp) + "\n";
             }
+            cout << endl;
         }
-        
-        while(!q.empty()) {
-            auto [row, col] = q.front(); q.pop();
-            for(int i = 0; i < dir.size(); i++) {
-                int x = row + dir[i].first;
-                int y = col + dir[i].second;
 
-                if(x < 0 || x == mat.size() || y < 0 || y == mat[0].size() || mat[x][y] != -1) continue;
+        while(!record.empty()) {
+            auto [row, col] = record.front(); record.pop();
+            for(auto dir : dirs) {
+                int x = row + dir.first;
+                int y = col + dir.second;
+                if(x < 0 || y < 0 ||
+                   x == m || y == n ||
+                   mat[x][y] != -1)
+                   continue;
                 mat[x][y] = mat[row][col] + 1;
-                q.emplace(x, y);
+                record.emplace(x, y);
             }
         }
 
