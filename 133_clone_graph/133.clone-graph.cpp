@@ -112,6 +112,28 @@ public:
 class Solution {
 public:
     Node* cloneGraph(Node* node) {
+        if(node == nullptr) return nullptr;
+
+        queue<Node*> q;
+        unordered_map<Node*, Node*> record;
+        q.push(node);
+        record[node] = new Node(node->val);
+
+        while (!q.empty())
+        {
+            Node *root = q.front(); q.pop();
+            for(int i = 0; i < root->neighbors.size(); i++) {
+                if(record.find(root->neighbors[i]) == record.end()) {
+                    Node *temp = new Node(root->neighbors[i]->val);
+                    record[root->neighbors[i]] = temp;
+                    record[root]->neighbors.push_back(temp);
+                    q.push(root->neighbors[i]);
+                } else
+                    record[root]->neighbors.push_back(record[root->neighbors[i]]); 
+            }
+        }
+
+        return record[node];
         
     }
 };
