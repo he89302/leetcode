@@ -71,7 +71,7 @@ public:
                 if(i - coin < 0) break;
                 if(dp[i - coin] != INT_MAX)
                     dp[i] = min(dp[i], 1 + dp[i - coin]);
-                // cout << "dp [ " + to_string(i) + " ] = " + to_string(dp[i]) + "\n"; 
+                cout << "dp [ " + to_string(i) + " ] = " + to_string(dp[i]) + "\n"; 
             }
         }
 
