@@ -66,7 +66,14 @@ public:
         adjList.resize(numCourses);
         
         for(auto req : prerequisites) {
-            adjList[req[0]].push_back(req[1]);
+            adjList[req[1]].push_back(req[0]);
+        }
+
+        for(int i = 0; i < adjList.size(); i++) {
+            for(int j = 0; j < adjList[i].size(); j++) {
+                cout << "adj[" + to_string(i) + "][" + to_string(j) + "] = " + to_string(adjList[i][j]);
+            }
+            cout << "\n";
         }
         
         for(int currNode = 0; currNode < numCourses; currNode++) {
