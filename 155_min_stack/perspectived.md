@@ -24,3 +24,9 @@ getMin() 的話就回傳 minStack top()
 
 依樣push 進去時先決定min(value, stack.top()->minVal)
 如果stack 為空 即直接new node(val, val) 加入stack 中
+
+#### using node struc to maintain next node
+> 在node struc 裡面添加next 就好
+看是完整使用data struc 來解決
+但是這邊我覺得是偏向min value 所以std::stack 可以做的事情就教不用額外做
+
