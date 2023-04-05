@@ -66,7 +66,22 @@
 class Solution {
 public:
     bool isValidBST(TreeNode* root) {
-        return isValidBST(root, LONG_MIN, LONG_MAX);
+        if(!root) return true;
+        stack<TreeNode*> s;
+        TreeNode* preNode = nullptr;
+        while (root || !s.empty())
+        {
+            while (root)
+            {
+                s.push(root);
+                root = root->left;
+            }
+            root = s.top(); s.pop();
+            if(preNode && preNode->val >= root->val) return false;
+            preNode = root;
+            root = root->right;
+        }
+        return true;
     }
 private:
     bool isValidBST(TreeNode* root, long left, long right) {

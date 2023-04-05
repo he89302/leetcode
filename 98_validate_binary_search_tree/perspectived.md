@@ -1,5 +1,6 @@
-#### case 1 left fail
+### using BST and Recursive
 
+#### case 1 left fail
 [5,1,7,2,3,6,9]
 
 [5]
@@ -21,3 +22,7 @@
 2, long min, long max
 1, long min, 2
 3, 2, long max
+
+### using BST and iterator
+
+using while and stack to store TreeNode*
