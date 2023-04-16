@@ -29,6 +29,21 @@ total = 7
     IF s[left_side] == s[right_side], perform answer = lps(left_side + 1, right_side - 1) + 2;
     ELSE perform answer = max(LPS(i, j - 1), LPS(i + 1, j);
 
-> DP
-LCS: xxy & yxx
-and concate all LCS --> xxyyxx shell be palidrome
+### Algorithm
+
+1. Create an integer variable n and initialize it to the size of s.
+2. Create a 2D-array called memo having n rows and n columns where memo[i][j] contains the length of the longest palindromic subsequence of the substring formed from index i to j in s.
+3. Return lps(s, 0, n - 1, memo) where lps is a recursive method with four parameters: s, the starting index of the substring under consideration as i, the ending index of the substring as j and memo. We perform the following in this method:
+
+ * If memo[i][j] != 0, it indicates that we have already solved this subproblem, so we return memo[i][j].
+ 
+ * If i > j, the string is empty. We return 0.
+
+ * If i == j, it is a substring having one character. As a result, we return 1.
+
+ * If the first and the last characters are the same, i.e., s[i] == s[j], we include these two characters in the palindromic subsequence and add it to the longest palindromic subsequence formed using the substring from index i + 1 to j - 1 (inclusive). We perform memo[i][j] = lps(s, i + 1, j - 1, memo) + 2.
+
+ * Otherwise, if the first and the last characters do not match, we recursively search for the longest palindromic subsequence in both the substrings formed after ignoring the first and last characters. We pick the maximum of these two. We perform memo[i][j] = max(lps(s, i + 1, j, memo), lps(s, i, j - 1, memo)).
+Return memo[i][j].
+
+_____
