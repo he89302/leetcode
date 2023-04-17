@@ -48,27 +48,31 @@
 class Solution {
 public:
     int longestPalindromeSubseq(string s) {
-        int n = s.length();
-        vector<vector<int>> memo(n, vector<int>(n));
-        return lps(s, 0, s.length() - 1, memo);
+        int n = s.size();
+        vector<vector<int>> dp(n, vector<int>(n));
+        cout<< "n : " << to_string(n) << "\n";
+        for (int i = n - 1; i >= 0; --i) {
+            dp[i][i] = 1;
+            for (int j = i + 1; j < n; j++) {
+                // cout << " i : " << to_string(i) << ", j = " << to_string(j) << "\n";
+                if (s[i] == s[j]) {
+                    dp[i][j] = dp[i + 1][j - 1] + 2;
+                } else {
+                    dp[i][j] = max(dp[i + 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        return dp[0][n - 1];
     }
 
-    int lps(string s, int left, int right, vector<vector<int>>& memo) {
-        if(memo[left][right] != 0)
-            return memo[left][right];
-        
-        if(left < 0 || right == s.length() || left > right)
-            return 0;
-        
-        if(left == right)
-            return 1;
-
-        if(s[left] == s[right])
-            memo[left][right] = lps(s, left + 1, right - 1, memo) + 2;
-        else
-            memo[left][right] = max(lps(s, left + 1, right, memo), lps(s, left, right - 1, memo));
-        return memo[left][right];
-    }
+    // int longestPalindromeSubseq(string s, int l, int r, vector<vector<int>>& mem) {
+    //     if(l==r) return 1;
+    //     if(l>r) return 0;
+    //     if(mem[l][r]) return mem[l][r];
+    //     return mem[l][r] = s[l]==s[r] ? 2 + longestPalindromeSubseq(l+1,r-1, s,mem) : 
+    //         max(longestPalindromeSubseq(l+1,r, s,mem),longestPalindromeSubseq(l,r-1, s,mem)); 
+    // }
 };
 // @lc code=end
 
