@@ -49,15 +49,15 @@ class Solution {
 public:
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
         vector<vector<int>> res;
-        int leftIndex = 0;
         sort(intervals.begin(), intervals.end());
+        int leftIndex = 0;
 
         res.push_back(intervals[0]);
-        for(int i = 0; i < intervals.size(); i++) {
-            if(res[leftIndex][1] >= intervals[i][0]) {
-                res.back()[1] = max(res[leftIndex][1], intervals[i][1]);
+        for(auto interval : intervals) {
+            if(res[leftIndex][1] >= interval[0]) {
+                res.back()[1] = max(res[leftIndex][1], interval[1]);
             } else {
-                res.push_back(intervals[i]);
+                res.push_back(interval);
                 leftIndex++;
             }
         }
