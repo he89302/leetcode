@@ -61,3 +61,28 @@ curr : 2 par : 3
 ```
 
 ### using Uion find / Disjoint Subset Union
+
+```
+[[1,2],[1,3],[2,3]]
+parent = [0,1,2,3]
+Union(1,2)
+
+1
+|
+2
+
+Union(1,3)
+
+1  1
+|  |
+2  3
+
+Union(2,3)
+
+if(find(2) == find(3)) return false
+
+```
+
+#### Union and Find with Path Compression
+
+parent[x] = find(parent[x])

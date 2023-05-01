@@ -72,7 +72,7 @@ class DisjointSubsetUnion {
     }
     int find(int x) {
         if(parent[x] == x) return x;
-        return find(parent[x]);
+        return parent[x] = find(parent[x]);
     }
     bool Union(int x, int y) {
         auto xPoint = find(x), yPoint = find(y);
