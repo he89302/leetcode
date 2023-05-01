@@ -59,3 +59,5 @@ curr : 1 par : 2
 curr : 3 par : 1
 curr : 2 par : 3
 ```
+
+### using Uion find / Disjoint Subset Union

@@ -58,19 +58,36 @@
 // check whether cycle in edges
 // using fast & slow algorithm
 
+// SPEC ;
+// find(x): finds the id which represents the component that a node belongs to
+// union(x, y): joins the two components into a single component.
+//              This involves finding the representative of x-component (by find(x)) and y-component (by find(y))
+//              and assigning them a common representative (same parent).
+
+class DisjointSubsetUnion {
+        vector<int> parent, rank;
+    public:
+    DisjointSubsetUnion(int node) : parent(node), rank(node) {
+        iota(parent.begin(), parent.end(), 0); // initializes each node's parent to be itself - fills as [0,1,2,3,...,n]
+    }
+    int find(int x) {
+        if(parent[x] == x) return x;
+        return find(parent[x]);
+    }
+    bool Union(int x, int y) {
+        auto xPoint = find(x), yPoint = find(y);
+        if(xPoint == yPoint) return false;
+        return parent[xPoint] = yPoint;
+    }
+};
+
 class Solution {
 public:
     vector<int> findRedundantConnection(vector<vector<int>>& edges) {
-        vector<bool> visited(edges.size() + 1);
-        vector<vector<int>> graph(edges.size() + 1);
-
+        DisjointSubsetUnion dsu(edges.size() + 1);
         for(auto edge : edges) {
-            graph[edge[1]].push_back(edge[0]);
-            graph[edge[0]].push_back(edge[1]);
-            fill(std::begin(visited), std::end(visited), false);
-            if(!graph[edge[0]].empty() and !graph[edge[1]].empty() and dfs(graph, visited, edge[0])) return edge;
+            if(!dsu.Union(edge[0], edge[1])) return edge;
         }
-
         return {};
     }
 
