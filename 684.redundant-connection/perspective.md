@@ -84,5 +84,9 @@ if(find(2) == find(3)) return false
 ```
 
 #### Union and Find with Path Compression
-
+> 減少tree height
 parent[x] = find(parent[x])
+
+#### Union by size / rank
+> 為了Union 兩個壓縮的子集
+> 採取 union by size 技巧，將子節點比較少的 root 加入比較大的子集

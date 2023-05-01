@@ -77,7 +77,10 @@ class DisjointSubsetUnion {
     bool Union(int x, int y) {
         auto xPoint = find(x), yPoint = find(y);
         if(xPoint == yPoint) return false;
-        return parent[xPoint] = yPoint;
+        if(rank[xPoint] > rank[yPoint]) parent[yPoint] = xPoint;
+        else if(rank[yPoint] > rank[xPoint]) parent[xPoint] = yPoint;
+        else parent[xPoint] = yPoint; rank[yPoint]++;
+        return true;
     }
 };
 
@@ -92,7 +95,7 @@ public:
     }
 
     bool dfs(vector<vector<int>>& graph, vector<bool> &visited, int cur, int par = -1) {
-        cout << "curr : " << cur << " par : " << par << endl;
+        // cout << "curr : " << cur << " par : " << par << endl;
         
         if(visited[cur]) return true;
         visited[cur] = true;
