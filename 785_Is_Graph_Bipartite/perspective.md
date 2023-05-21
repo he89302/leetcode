@@ -16,7 +16,7 @@ so is not bippartition
 
 [2] -----> [1] | Blue
 
-Red = 1, Blue = 2, no pick = 0
+Red = 1, Blue = -1, no pick = 0
 
 using BFS
 

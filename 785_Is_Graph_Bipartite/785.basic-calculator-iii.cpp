@@ -74,14 +74,14 @@ public:
             if(color[node] != 0) continue;
             queue<int> q;
             q.push(node);
-            color[node] = 1;
+            color[node] = 1; // Red
 
             while (!q.empty()) // BFS
             {
                 int cur = q.front(); q.pop();
                 for(int nei : graph[cur]) {
                     if(color[nei] == 0) {
-                        color[nei] = -color[cur];
+                        color[nei] = -color[cur]; // Blue
                         q.push(nei);
                     } else if(color[nei] != -color[cur])
                         return false;
