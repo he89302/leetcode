@@ -68,27 +68,21 @@ class Solution {
 public:
     bool isBipartite(vector<vector<int>>& graph) {
         int n = graph.size();
-        vector<int> color(n, 0);
+        vector<int> colors(n, 0);
 
         for(int node = 0; node < n; node++) {
-            if(color[node] != 0) continue;
-            queue<int> q;
-            q.push(node);
-            color[node] = 1; // Red
-
-            while (!q.empty()) // BFS
-            {
-                int cur = q.front(); q.pop();
-                for(int nei : graph[cur]) {
-                    if(color[nei] == 0) {
-                        color[nei] = -color[cur]; // Blue
-                        q.push(nei);
-                    } else if(color[nei] != -color[cur])
-                        return false;
-                }
-            }
-            
+            if(colors[node] == 0 && !validColor(graph, colors, 1, node))
+                return false;
         }
+
+        return true;
+    }
+private:
+    bool validColor(vector<vector<int>>& graph, vector<int>& colors, int color, int node) {
+        if(colors[node] != 0)   return colors[node] == color;
+        colors[node] = color;
+        for(int nextNode : graph[node])
+            if(!validColor(graph, colors, -color, nextNode)) return false;
 
         return true;
     }
